@@ -34,7 +34,7 @@ public class EnemyMakeCoin : MonoBehaviour
                 eCoin[i] = 0;
         }
 
-        //AutoGame();
+        AutoGame();
     }
 
     void AutoGame() {
