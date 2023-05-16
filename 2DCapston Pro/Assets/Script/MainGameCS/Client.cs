@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 public class Client : MonoBehaviour{
     //local IP
@@ -53,15 +54,19 @@ public class Client : MonoBehaviour{
     //    Debug.Log("Send Packet from Client :" + packet.mouseX.ToString() + "/" + packet.mouseX.ToString());
     //
     //}
-    //
-    //// Update is called once per frame
-    //void Update(){
-    //    //마우스 왼쪽 클리할 때마다 패킷 클래스를 이용해서 위치정보를 서버에 전송.
-    //    if (Input.GetMouseButtonDown(0) == true){
-    //        SimplePacket newPacket = new SimplePacket();
-    //        newPacket.mouseX = Input.mousePosition.x;
-    //        newPacket.mouseY = Input.mousePosition.y;
-    //        Client.Send(newPacket);
-    //    }
-    //}
+    
+    // Update is called once per frame
+    void Update(){
+        //마우스 왼쪽 클리할 때마다 패킷 클래스를 이용해서 위치정보를 서버에 전송.
+        if (Input.GetMouseButtonDown(0) == true){
+            string aaa = "abcd";
+            Debug.Log(aaa);
+            byte[] buff = Encoding.UTF8.GetBytes(aaa);
+            clientSocket.Send(buff, SocketFlags.None);
+            //SimplePacket newPacket = new SimplePacket();
+            //newPacket.mouseX = Input.mousePosition.x;
+            //newPacket.mouseY = Input.mousePosition.y;
+            //Client.Send(newPacket);
+        }
+    }
 }
