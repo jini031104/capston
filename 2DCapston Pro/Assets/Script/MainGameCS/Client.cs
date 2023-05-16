@@ -7,6 +7,8 @@ using System.Net.Sockets;
 using System.Text;
 
 public class Client : MonoBehaviour{
+    int[] pCoin = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
+
     //local IP
     public string serverIp = "127.0.0.1";
     Socket clientSocket = null;
@@ -57,6 +59,9 @@ public class Client : MonoBehaviour{
     
     // Update is called once per frame
     void Update(){
+        pCoin = GameObject.Find("startButton").GetComponent<Calculate>().PCoin;
+        Debug.Log("플레이어 코인1:" + pCoin[0] + " 코인2:" + pCoin[1] + " 코인3:" + pCoin[2] + " 코인4:" + pCoin[3] + " 코인5:" + pCoin[4] + " 코인6:" + pCoin[5] + " 코인-:" + pCoin[6]);
+
         //마우스 왼쪽 클리할 때마다 패킷 클래스를 이용해서 위치정보를 서버에 전송.
         if (Input.GetMouseButtonDown(0) == true){
             string aaa = "abcd";
