@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 
 public class Server : MonoBehaviour{
     Socket serverSocket = null;
@@ -61,46 +62,56 @@ public class Server : MonoBehaviour{
             //
             this.ByteBuffers.Add(new ArrayList());
             Debug.Log("New Client Connected");
+            Debug.Log("Connections.Count: " + Connections.Count);
+            Debug.Log("listenList.Count: " + listenList.Count);
+
         }
 
         //서버와 연결된 클라이언트들이 하나라도 있다면
-        //if (Connections.Count != 0){
-        //    ArrayList cloneConnections = new ArrayList(this.Connections);
-        //    Socket.Select(cloneConnections, null, null, 1000);
-        //    foreach (Socket client in cloneConnections){
-        //        byte[] receivedBytes = new byte[512];
-        //        ArrayList buffer = (ArrayList)this.ByteBuffers[cloneConnections.IndexOf(client)];
-        //
-        //        //클라이언트로부터 전송된 데이터 담기
-        //        int read = client.Receive(receivedBytes);
-        //        for (int i = 0; i < read; i++){
-        //            buffer.Add(receivedBytes[i]);
-        //        }
-        //
-        //        while (buffer.Count > 0){
-        //            //패킷의 첫번째의 정보는 전체 데이터의 크기임 그걸 가져옴.
-        //            int packetDataLength = (byte)buffer[0];
-        //            if (packetDataLength < buffer.Count){
-        //                ArrayList thisPacketBytes = new ArrayList(buffer);
-        //                //버퍼의 뒷부분 잘라내기
-        //                thisPacketBytes.RemoveRange(packetDataLength, thisPacketBytes.Count - (packetDataLength + 1));
-        //                //버퍼의 가장 첫부분 잘라내기
-        //                thisPacketBytes.RemoveRange(0, 1);
-        //                buffer.RemoveRange(0, packetDataLength + 1);
-        //
-        //                byte[] readBytes = (byte[])thisPacketBytes.ToArray(typeof(byte));
-        //
-        //                SimplePacket readpacket = SimplePacket.FromByteArray(readBytes);
-        //                this.Buffer.Add(readpacket);
-        //
-        //                Debug.LogWarning("Packet Receive From Client IP :[" + client.RemoteEndPoint.ToString() + "]"
-        //                    + readpacket.mouseX.ToString() + " / " + readpacket.mouseY.ToString());
-        //            }
-        //            else{
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
+        if (Connections.Count != 0){
+            ArrayList cloneConnections = new ArrayList(this.Connections);
+            //하나 이상의 소켓 상태를 확인
+            //연결 요청이 포함된 소켓만 Select가 반환된 후 cloneConnections에 남습니다.
+            Socket.Select(cloneConnections, null, null, 1000);
+            foreach (Socket client in cloneConnections){
+                byte[] receivedBytes = new byte[512];
+                byte[] buff = new byte[512];
+                ArrayList buffer = (ArrayList)this.ByteBuffers[cloneConnections.IndexOf(client)];
+
+                int n = client.Receive(buff);
+                string data = Encoding.UTF8.GetString(buff, 0, n);
+                Debug.Log("Server: " + data);
+
+                //클라이언트로부터 전송된 데이터 받기
+                //int read = client.Receive(receivedBytes);
+                //for (int i = 0; i < read; i++){
+                //    buffer.Add(receivedBytes[i]);
+                //}
+                //
+                //while (buffer.Count > 0){
+                //    //패킷의 첫번째의 정보는 전체 데이터의 크기임 그걸 가져옴.
+                //    int packetDataLength = (byte)buffer[0];
+                //    if (packetDataLength < buffer.Count){
+                //        ArrayList thisPacketBytes = new ArrayList(buffer);
+                //        //버퍼의 뒷부분 잘라내기
+                //        thisPacketBytes.RemoveRange(packetDataLength, thisPacketBytes.Count - (packetDataLength + 1));
+                //        //버퍼의 가장 첫부분 잘라내기
+                //        thisPacketBytes.RemoveRange(0, 1);
+                //        buffer.RemoveRange(0, packetDataLength + 1);
+                //
+                //        byte[] readBytes = (byte[])thisPacketBytes.ToArray(typeof(byte));
+                //
+                //        //SimplePacket readpacket = SimplePacket.FromByteArray(readBytes);
+                //        //this.Buffer.Add(readpacket);
+                //        //
+                //        //Debug.LogWarning("Packet Receive From Client IP :[" + client.RemoteEndPoint.ToString() + "]"
+                //        //    + readpacket.mouseX.ToString() + " / " + readpacket.mouseY.ToString());
+                //    }
+                //    else{
+                //        break;
+                //    }
+                //}
+            }
+        }
     }
 }
