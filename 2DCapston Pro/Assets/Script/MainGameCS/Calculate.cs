@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Calculate : MonoBehaviour
 {
+    public int[] PCoin => pCoin;
     int[] pCoin = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
     int[] eCoin = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
     int[] pCoinCopy = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
@@ -87,6 +88,7 @@ public class Calculate : MonoBehaviour
             for (int i = 0; i < 6; i++)
                 eCoin[i] = GameObject.Find(enemyCoinName[i]).GetComponent<EnemyMakeClickCoin>().ECoin[i];
         }
+
 
         //게임 자동 진행 때는 얘가 필요.....
         //eCoin = GameObject.Find("enemyCoin").GetComponent<EnemyMakeCoin>().ECoin;

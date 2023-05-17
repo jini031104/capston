@@ -60,13 +60,20 @@ public class Client : MonoBehaviour{
     // Update is called once per frame
     void Update(){
         pCoin = GameObject.Find("startButton").GetComponent<Calculate>().PCoin;
-        Debug.Log("플레이어 코인1:" + pCoin[0] + " 코인2:" + pCoin[1] + " 코인3:" + pCoin[2] + " 코인4:" + pCoin[3] + " 코인5:" + pCoin[4] + " 코인6:" + pCoin[5] + " 코인-:" + pCoin[6]);
+        //Debug.Log("플레이어 코인1:" + pCoin[0] + " 코인2:" + pCoin[1] + " 코인3:" + pCoin[2] + " 코인4:" + pCoin[3] + " 코인5:" + pCoin[4] + " 코인6:" + pCoin[5] + " 코인-:" + pCoin[6]);
+        //string s = String.Join(", ", pCoin);
+        //Debug.Log(s);
+        var builder = new StringBuilder();
+        Array.ForEach(pCoin, x =>  builder.Append(x));
+        string s = builder.ToString();
+        //Debug.Log(s);
 
         //마우스 왼쪽 클리할 때마다 패킷 클래스를 이용해서 위치정보를 서버에 전송.
         if (Input.GetMouseButtonDown(0) == true){
-            string aaa = "abcd";
-            Debug.Log(aaa);
-            byte[] buff = Encoding.UTF8.GetBytes(aaa);
+            //string aaa = "abcd";
+            //Debug.Log(aaa);
+            //byte[] buff = Encoding.UTF8.GetBytes(aaa);
+            byte[] buff = Encoding.UTF8.GetBytes(s);
             clientSocket.Send(buff, SocketFlags.None);
             //SimplePacket newPacket = new SimplePacket();
             //newPacket.mouseX = Input.mousePosition.x;
