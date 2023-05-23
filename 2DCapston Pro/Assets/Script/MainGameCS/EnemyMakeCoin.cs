@@ -12,6 +12,8 @@ public class EnemyMakeCoin : MonoBehaviour
 
     public int[] ECoin => eCoin;
     int[] eCoin = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
+    int[] clientPCoin = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
+    int[] clientMakeNum = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
 
     bool playerTurn, attack, deleteCoinNum;
 
@@ -32,6 +34,16 @@ public class EnemyMakeCoin : MonoBehaviour
         if (deleteCoinNum){
             for (int i = 0; i < 7; i++)
                 eCoin[i] = 0;
+        }
+
+        clientPCoin = GameObject.Find("Server").GetComponent<Server>().ClientPCoin;
+        //Debug.Log("利 内牢1:" + clientPCoin[0] + " 内牢2:" + clientPCoin[1] + " 内牢3:" + clientPCoin[2] + " 内牢4:" + clientPCoin[3] + " 内牢5:" + clientPCoin[4] + " 内牢6:" + clientPCoin[5] + " 内牢-:" + clientPCoin[6]);
+
+        for(int i=0; i<7; i++){
+            if (clientMakeNum[i] != clientPCoin[i]){
+                clientMakeNum[i]++;
+                Instantiate(enemyCoin[i], new Vector3(-3 + i, 2, 0), Quaternion.identity);
+            }
         }
 
         AutoGame();

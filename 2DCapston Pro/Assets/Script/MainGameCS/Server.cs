@@ -7,6 +7,9 @@ using System.Net.Sockets;
 using System.Text;
 
 public class Server : MonoBehaviour{
+    public int[] ClientPCoin => clientPCoin;
+    int[] clientPCoin = new int[7] { 0, 0, 0, 0, 0, 0, 0 };
+
     Socket serverSocket = null;
     ArrayList Connections = new ArrayList();
 
@@ -81,6 +84,13 @@ public class Server : MonoBehaviour{
                 int n = client.Receive(buff);
                 string data = Encoding.UTF8.GetString(buff, 0, n);
                 Debug.Log("Server: " + data);
+                clientPCoin[0] = (data[0] - '0');
+                clientPCoin[1] = (data[1] - '0');
+                clientPCoin[2] = (data[2] - '0');
+                clientPCoin[3] = (data[3] - '0');
+                clientPCoin[4] = (data[4] - '0');
+                clientPCoin[5] = (data[5] - '0');
+                clientPCoin[6] = (data[6] - '0');
 
                 //클라이언트로부터 전송된 데이터 받기
                 //int read = client.Receive(receivedBytes);
