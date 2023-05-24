@@ -5,6 +5,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using UnityEngine.SceneManagement;
 
 public class TestServer : MonoBehaviour{
     public static TestServer Instance;
@@ -20,6 +21,8 @@ public class TestServer : MonoBehaviour{
     public const int PortNumb = 12345;
 
     private void Start(){
+        if (SceneManager.GetActiveScene().name == "GameStart")
+            Debug.Log("aaaaaaaaaa");
         DontDestroyOnLoad(gameObject);
         Debug.Log("Server Start");
         this.serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -66,10 +69,6 @@ public class TestServer : MonoBehaviour{
             //this.Connections.Add(clientSock);
             //
             this.ByteBuffers.Add(new ArrayList());
-            Debug.Log("New Client Connected");
-            Debug.Log("Connections.Count: " + Connections.Count);
-            Debug.Log("listenList.Count: " + listenList.Count);
-        
         }
 
         //if (Connections.Count != 0){
@@ -86,13 +85,15 @@ public class TestServer : MonoBehaviour{
             //연결 요청이 포함된 소켓만 Select가 반환된 후 cloneConnections에 남습니다.
             Socket.Select(cloneConnections, null, null, 1000);
             foreach (Socket client in cloneConnections){
-                byte[] receivedBytes = new byte[512];
+                //byte[] receivedBytes = new byte[512];
                 byte[] buff = new byte[512];
                 ArrayList buffer = (ArrayList)this.ByteBuffers[cloneConnections.IndexOf(client)];
         
                 int n = client.Receive(buff);
                 string data = Encoding.UTF8.GetString(buff, 0, n);
                 Debug.Log("Server: " + data);
+
+                client.Send(buff, 0, n, SocketFlags.None);
             }
         }
     }

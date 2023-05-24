@@ -49,6 +49,12 @@ public class TestClient : MonoBehaviour{
             Debug.Log(aaa);
             byte[] buff = Encoding.UTF8.GetBytes(aaa);
             clientSocket.Send(buff, SocketFlags.None);
+
+            byte[] receivedBuff = new byte[512];
+            int n = clientSocket.Receive(receivedBuff);
+
+            string data = Encoding.UTF8.GetString(receivedBuff, 0, n);
+            Debug.Log("Client: " + data);
         }
     }
 }
