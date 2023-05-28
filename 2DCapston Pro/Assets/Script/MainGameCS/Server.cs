@@ -17,7 +17,7 @@ public class Server : MonoBehaviour{
     ArrayList Buffer = new ArrayList();
     ArrayList ByteBuffers = new ArrayList();
 
-    public const int PortNumb = 12345;
+    public const int PortNumb = 8731; //12345;
 
     private void Start(){
         Debug.Log("Server Start");

@@ -231,10 +231,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 717264891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cdeab5a5b8f75346b4119f94bc81b66, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e2b652078eb21848b7a500dc2a9a4a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serverIp: 127.0.0.1
 --- !u!4 &717264893
 Transform:
   m_ObjectHideFlags: 0
@@ -275,9 +274,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 874836860}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3092f0405cd0ca64584777b3986789a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a0cb6cf3a1a9e8438771c4694092215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: 0
 --- !u!4 &874836862
 Transform:
   m_ObjectHideFlags: 0
@@ -606,6 +606,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5475221751725805582, guid: 3a83d1b770fe0e34ea0ec9f13369f5fd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6059003587714193953, guid: 3a83d1b770fe0e34ea0ec9f13369f5fd, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -665,6 +669,10 @@ PrefabInstance:
     - target: {fileID: 6871990578716197019, guid: 3a83d1b770fe0e34ea0ec9f13369f5fd, type: 3}
       propertyPath: m_Name
       value: enemyDice
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871990578716197019, guid: 3a83d1b770fe0e34ea0ec9f13369f5fd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a83d1b770fe0e34ea0ec9f13369f5fd, type: 3}
@@ -934,6 +942,10 @@ PrefabInstance:
     - target: {fileID: 2475110274558216160, guid: 2a8dd77da9c784ca2b681f3d42568e22, type: 3}
       propertyPath: m_Name
       value: playerDice
+      objectReference: {fileID: 0}
+    - target: {fileID: 2475110274558216160, guid: 2a8dd77da9c784ca2b681f3d42568e22, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2475110274558216161, guid: 2a8dd77da9c784ca2b681f3d42568e22, type: 3}
       propertyPath: Button
