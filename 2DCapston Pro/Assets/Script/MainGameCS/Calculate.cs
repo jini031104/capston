@@ -50,7 +50,6 @@ public class Calculate : MonoBehaviour
     int attackResult, clickCount;
 
     public static bool playerWin, enemyWin;
-    bool cardClick, playerTurnCheck;
 
     // Start is called before the first frame update
     void Start(){
@@ -92,15 +91,6 @@ public class Calculate : MonoBehaviour
 
         //게임 자동 진행 때는 얘가 필요.....
         //eCoin = GameObject.Find("enemyCoin").GetComponent<EnemyMakeCoin>().ECoin;
-
-        //cardClick = GameObject.Find("hpRecoveryCard").GetComponent<HpRecovery>().CardClick;
-        //playerTurnCheck = GameObject.Find("changeButton").GetComponent<ChangeButton>().PlayerTurn;
-        //if (cardClick){
-        //    if (playerTurnCheck)
-        //        playerHP = GameObject.Find("hpRecoveryCard").GetComponent<HpRecovery>().PlayerHP;
-        //    else
-        //        enemyHP = GameObject.Find("hpRecoveryCard").GetComponent<HpRecovery>().EnemyHP;
-        //}
 
         playerHpText.text = " " + playerHP;
         enemyHpText.text = " " + enemyHP;

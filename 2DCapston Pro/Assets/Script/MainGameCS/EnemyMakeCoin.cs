@@ -36,7 +36,7 @@ public class EnemyMakeCoin : MonoBehaviour
                 eCoin[i] = 0;
         }
 
-        clientPCoin = GameObject.Find("Server").GetComponent<Server>().ClientPCoin;
+        //clientPCoin = GameObject.Find("Server").GetComponent<Server>().ClientPCoin;
         //Debug.Log("利 内牢1:" + clientPCoin[0] + " 内牢2:" + clientPCoin[1] + " 内牢3:" + clientPCoin[2] + " 内牢4:" + clientPCoin[3] + " 内牢5:" + clientPCoin[4] + " 内牢6:" + clientPCoin[5] + " 内牢-:" + clientPCoin[6]);
 
         for(int i=0; i<7; i++){

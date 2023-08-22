@@ -29,12 +29,23 @@ public class GameStartDice : MonoBehaviour
     bool firstChoice = false;
     bool diceDrop = false, diceRoll = false;
 
-    bool multiSelect, singleSelect, test;
+    bool multiSelect, singleSelect, clientDiceClick;
     public static bool enemySelectTurn;
+
+    bool server, client;
+
+    public bool DiceClick=> diceClick;
+    bool diceClick;
 
     // Start is called before the first frame update
     void Start(){
         enemySelectTurn = false;
+        server = GameObject.Find("testServer");
+        client = GameObject.Find("testClient");
+        if (server)
+            Debug.Log("server");
+        if (client)
+            Debug.Log("client");
 
         // 주사위의 크기 값을 가져옴.
         playerDiceScale = playerDice.gameObject.transform.localScale;
@@ -45,11 +56,10 @@ public class GameStartDice : MonoBehaviour
 
         multiSelect = MultiButton.multiSelect;
         singleSelect = SingleButton.singleSelect;
+        diceClick = false;
 
         Button.SetActive(false);    // 게임 시작시, 공/방 버튼은 비활성 처리한다.
     }
-
-    int i = 0;
 
     // Update is called once per frame
     void Update(){
@@ -70,11 +80,12 @@ public class GameStartDice : MonoBehaviour
             if (multiSelect && enemyDiceVal != playerDiceVal)
                 Button.SetActive(true);
         }
-        test = GameObject.Find("testServer").GetComponent<testServer>().test;
-        if(test && i == 0){
-            enemyDice.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-            i = 1;
-        }
+        //if(server)
+        //    clientDiceClick = GameObject.Find("testServer").GetComponent<testServer>().clientDiceClick;
+        //if(clientDiceClick && i == 0){
+        //    enemyDice.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        //    i = 1;
+        //}
 
         SmallDice(playerDice, playerDiceScale);
         SmallDice(enemyDice, enemyDiceScale);
@@ -84,30 +95,33 @@ public class GameStartDice : MonoBehaviour
     public void gameStart(){
         if(gameStartCheck){
             if(Input.GetMouseButtonDown(0))
-                SceneManager.LoadScene("SkillSelect");
+                SceneManager.LoadScene("MainGameCS");
         }
     }
 
     private void OnMouseDown(){ // 주사위를 클릭하면, 주사위가 커진다.
         if (!diceRoll){
             playerDice.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            diceClick = true;
         }
     }
 
     private void OnMouseUp(){   // 주사위를 굴린다.
         if (!diceRoll){
+            diceClick = false;
             DiceDrpoAndValSet(playerDice);
-            //DiceDrpoAndValSet(enemyDice);
+            if(singleSelect)
+                DiceDrpoAndValSet(enemyDice);
         }
 
-        if (playerDiceVal > enemyDiceVal)
-            Debug.Log("플레이어 우선권");
-        else if (playerDiceVal < enemyDiceVal){
-            enemySelectTurn = true;
-            Debug.Log("적 우선권");
-        }
-        else if(playerDiceVal == enemyDiceVal)
-            Debug.Log("다시 굴리기");
+        //if (playerDiceVal > enemyDiceVal)
+        //    Debug.Log("플레이어 우선권");
+        //else if (playerDiceVal < enemyDiceVal){
+        //    enemySelectTurn = true;
+        //    Debug.Log("적 우선권");
+        //}
+        //else if(playerDiceVal == enemyDiceVal)
+        //    Debug.Log("다시 굴리기");
         Debug.Log("playerDiceVal: " + playerDiceVal + "enemyDiceVal: " + enemyDiceVal);
     }
 
@@ -119,8 +133,9 @@ public class GameStartDice : MonoBehaviour
         valIndex = Random.Range(0, dVall);
         if(Dice.name == "playerDice")
             playerDiceVal = valIndex;
-        //if(Dice.name == "enemyDice")
-        //    enemyDiceVal = valIndex;
+        if (singleSelect)
+            if(Dice.name == "enemyDice")
+                enemyDiceVal = valIndex;
     }
 
     void SmallDice(GameObject Dice, Vector3 diceScale){ // 주사위가 떨어지는 동안 점점 작아짐.
@@ -129,7 +144,8 @@ public class GameStartDice : MonoBehaviour
         }
         else{
             DiceResult(playerDiceVal, playerDice);
-            //DiceResult(enemyDiceVal, enemyDice);
+            if (singleSelect)
+                DiceResult(enemyDiceVal, enemyDice);
             gameStartCheck = true;
             diceDrop = true;
             if(playerDiceVal != enemyDiceVal)

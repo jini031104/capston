@@ -25,17 +25,12 @@ public class DiceRot : MonoBehaviour{
 
     bool playerTurn, diceStart;
     bool diceChang, reOK;
-    bool diceRePlay = true;
     bool coinDeletes;
 
     int attackResult, coinDelete;
 
     string[] deleteCoinName = new string[] { "clonCoin1(Clone)", "clonCoin2(Clone)", "clonCoin3(Clone)", "clonCoin4(Clone)", "clonCoin5(Clone)", "clonCoin6(Clone)", "clonCoin-(Clone)" };
     string[] deleteEnemyCoinName = new string[] { "eClon1(Clone)", "eClon2(Clone)", "eClon3(Clone)", "eClon4(Clone)", "eClon5(Clone)", "eClon6(Clone)", "eClon-(Clone)" };
-
-    bool clickDicePiusOne, clickDiceMinusOne;
-    int clickCount;
-    int[] skillCard = new int[] { 0, 0, 0, 0, 0, 0 };
 
     // Start is called before the first frame update
     void Start(){
@@ -54,60 +49,11 @@ public class DiceRot : MonoBehaviour{
         enemyCoinMakeOk = false;
         diceStart = true;
         coinDelete = 0;
-        clickCount = 0;
-        for (int i = 0; i < skillCard.Length; i++)
-            skillCard[i] = GameObject.Find("skill").GetComponent<SkillOpen>().SelectCard[i];
-        clickDicePiusOne = false;
-        clickDiceMinusOne = false;
     }
 
     // Update is called once per frame
     void Update(){
         playerTurn = GameObject.Find("changeButton").GetComponent<ChangeButton>().PlayerTurn;
-
-        // Skill Check
-        if(skillCard[3] == 1)
-            clickDicePiusOne = GameObject.Find("dicePlusOneCard").GetComponent<DicePiusOne>().Click;
-        if (skillCard[4] == 1)
-            clickDiceMinusOne = GameObject.Find("diceMinusOneCard").GetComponent<DiceMinusOne>().Click;
-
-        // Skill Use
-        if (playerTurn){
-            if (clickDicePiusOne){
-                playerDiceNumVall = GameObject.Find("dicePlusOneCard").GetComponent<DicePiusOne>().PlayerDiceNumVall;
-                DiceResult(playerDiceNumVall);
-            }
-            if (clickDiceMinusOne){
-                playerDiceNumVall = GameObject.Find("diceMinusOneCard").GetComponent<DiceMinusOne>().PlayerDiceNumVall;
-                DiceResult(playerDiceNumVall);
-            }
-
-            cleanEnemyDiceNum = GameObject.Find("changeButton").GetComponent<ChangeButton>().CleanEnemyDiceNum;
-            if (cleanEnemyDiceNum < 0){
-                enemyDiceNumVall = cleanEnemyDiceNum;
-                if (!diceRePlay){
-                    diceRePlay = true;
-                    diceStart = true;
-                    clickCount = 0;
-                }
-            }
-        }
-        else{
-            cleanPlayerDiceNum = GameObject.Find("changeButton").GetComponent<ChangeButton>().CleanPlayerDiceNum;
-            if (clickDicePiusOne){
-                enemyDiceNumVall = GameObject.Find("dicePlusOneCard").GetComponent<DicePiusOne>().EnemyDiceNumVall;
-                DiceResult(enemyDiceNumVall);
-            }
-
-            if (cleanPlayerDiceNum < 0){
-                playerDiceNumVall = cleanPlayerDiceNum;
-                if (!diceStart){
-                    if (diceRePlay){
-                        diceStart = true;
-                    }
-                }
-            }
-        }
 
         SmallDice();
 
@@ -120,17 +66,8 @@ public class DiceRot : MonoBehaviour{
     }
 
     void OnMouseDown(){
-        if (!diceStart){
+        if (!diceStart)
             Debug.Log("더이상 주사위를 굴릴 수 없습니다.");
-            if (clickCount == 0 && GameObject.Find("diceRePlayCard")){
-                // 리플레이 카드를 클릭했을 경우, 다시 주사위를 굴릴 수 있다.
-                diceStart = GameObject.Find("diceRePlayCard").GetComponent<RePlayDice>().StartDice;
-                if (diceStart){
-                    Debug.Log("다시 주사위를 굴렸습니다.");
-                    clickCount++;
-                }
-            }
-        }
 
         if (diceStart){
             coinDelete++;
@@ -140,10 +77,8 @@ public class DiceRot : MonoBehaviour{
 
             transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             coinMakeOk = true;
-            if (!playerTurn){
+            if (!playerTurn)
                 enemyCoinMakeOk = true;
-                diceRePlay = false;
-            }
         }
     }
 

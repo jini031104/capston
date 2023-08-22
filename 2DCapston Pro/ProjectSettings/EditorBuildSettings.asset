@@ -11,13 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameStart.unity
     guid: 7560b753fc6e74f6f9e4b48ace6b9c69
-  - enabled: 0
-    path: Assets/Scenes/SkillSelect.unity
-    guid: 9a7feaa2cd5081b43b649e2665b083fc
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainGameCS.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/GameOver.unity
     guid: 2837e9ecb2c8fc94e8523ef33d6998a7
   m_configObjects: {}

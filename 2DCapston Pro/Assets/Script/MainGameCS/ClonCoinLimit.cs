@@ -17,7 +17,7 @@ public class ClonCoinLimit : MonoBehaviour
     bool diceChang;
 
     public bool CalculateActive => calculateActive;
-    bool calculateActive, coinSpawnCheck;
+    bool calculateActive;
 
     public int CoinSpawn => coinSpawn;
     int coinSpawn;
